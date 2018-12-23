@@ -6,14 +6,20 @@ Class {
 		'bottomTabs',
 		'logs',
 		'errors',
-		'status'
+		'status',
+		'leftPanel',
+		'centralPanel',
+		'rightPanel'
 	],
-	#category : #LaoZi
+	#category : #'LaoZi-SpecUI'
 }
 
 { #category : #specs }
-LZBrowser class >> buildMainlayout: mainRow [ 
-	
+LZBrowser class >> buildMainlayout: mainRow [
+	mainRow
+		newColumn: #leftPanel width: 100;
+		newColumn: #centralPanel;
+		newColumn: #rightPanel width: 200
 ]
 
 { #category : #specs }
@@ -57,11 +63,24 @@ LZBrowser >> bottomTabs [
 	^ bottomTabs
 ]
 
+{ #category : #accessing }
+LZBrowser >> centralPanel [
+	^ centralPanel
+]
+
+{ #category : #accessing }
+LZBrowser >> cleanUpTabs [
+	leftPanel tabs do: [ :t | leftPanel removeTab: t ].
+	centralPanel tabs do: [ :t | leftPanel removeTab: t ].
+	rightPanel tabs do: [ :t | leftPanel removeTab: t ].
+]
+
 { #category : #initialization }
 LZBrowser >> initializeWidgets [
 	self installMenu.
 	self installLog.
 	self installStatus.
+	self installPanels.
 ]
 
 { #category : #initialization }
@@ -118,18 +137,49 @@ LZBrowser >> installMenu [
 ]
 
 { #category : #initialization }
+LZBrowser >> installPanels [
+	leftPanel := self newTabManager.
+	centralPanel := self newTabManager.
+	rightPanel := self newTabManager
+]
+
+{ #category : #initialization }
 LZBrowser >> installStatus [
 	status := self newLabel label: 'Status'
 ]
 
 { #category : #accessing }
-LZBrowser >> log [
-	^ ComposablePresenter new	
+LZBrowser >> leftPanel [
+	^ leftPanel
 ]
 
 { #category : #initialization }
 LZBrowser >> menu [
 	^ menu
+]
+
+{ #category : #accessing }
+LZBrowser >> newCenterTab: aTitle for: aWidget [
+	| tab |
+	tab := self newTab: aTitle for: aWidget.
+	centralPanel addTab: tab.
+	^ tab
+]
+
+{ #category : #accessing }
+LZBrowser >> newLeftTab: aTitle for: aWidget [
+	| tab |
+	tab := self newTab: aTitle for: aWidget.
+	leftPanel addTab: tab.
+	^ tab
+]
+
+{ #category : #accessing }
+LZBrowser >> newRightTab: aTitle for: aWidget [
+	| tab |
+	tab := self newTab: aTitle for: aWidget.
+	rightPanel addTab: tab.
+	^ tab
 ]
 
 { #category : #accessing }
@@ -141,6 +191,11 @@ LZBrowser >> newTab: aTitle for: aWidget [
 		label: aTitle;
 		presenter: aWidget.
 	^ tab
+]
+
+{ #category : #accessing }
+LZBrowser >> rightPanel [
+	^ rightPanel
 ]
 
 { #category : #initialization }
