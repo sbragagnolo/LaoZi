@@ -9,7 +9,8 @@ Class {
 		'status',
 		'leftPanel',
 		'centralPanel',
-		'rightPanel'
+		'rightPanel',
+		'player'
 	],
 	#category : #'LaoZi-SpecUI'
 }
@@ -56,6 +57,13 @@ LZBrowser class >> menuCommandOn: aBuilder [
 		help: 'Learn and test :)';
 		icon: self taskbarIcon.
 	aBuilder withSeparatorAfter
+]
+
+{ #category : #specs }
+LZBrowser class >> openOn: aPlayer [
+	self new
+		openWithSpec;
+		openOn: aPlayer
 ]
 
 { #category : #accessing }
@@ -191,6 +199,12 @@ LZBrowser >> newTab: aTitle for: aWidget [
 		label: aTitle;
 		presenter: aWidget.
 	^ tab
+]
+
+{ #category : #initialization }
+LZBrowser >> openOn: aPlayer [
+	player := aPlayer.
+	player playOn: self.
 ]
 
 { #category : #accessing }
