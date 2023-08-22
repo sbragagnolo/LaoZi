@@ -10,7 +10,7 @@ BaselineOfLaoZi >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec baseline: 'SpecWizard' with: [ spec repository: 'github://sbragagnolo/specwizard' ].
-			spec baseline: 'TaskItShell' with: [ spec repository: 'github://sbragagnolo/taskit' ].
+			spec baseline: 'TaskItShell' with: [ spec repository: 'github://pharo-contributions/taskit-shell' ].
 			spec baseline: 'ROSDDS' with: [ spec repository: 'github://sbragagnolo/ROSDDS/src' ].
 			spec package: 'LaoZi' with: [ spec requires: #('SpecWizard' 'TaskItShell' 'ROSDDS') ] ]
 ]
